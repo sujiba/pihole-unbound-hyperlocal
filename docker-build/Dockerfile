@@ -1,5 +1,5 @@
 # Get the latet Pi-hole version
-FROM pihole/pihole:2021.12
+FROM pihole/pihole:2021.12.1
 
 # Install necessary programs
 RUN apt-get update && \
