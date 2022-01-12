@@ -3,8 +3,8 @@ version: "3"
 services:
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
   pihole-unbound:
-    image: ${image}
-    container_name: ${name}
+    image: ${IMAGE}
+    container_name: ${NAME}
     hostname: ${HOSTNAME}
     ports:
       - "53:53/tcp"
