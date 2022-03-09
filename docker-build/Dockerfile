@@ -23,6 +23,5 @@ RUN chmod +x start_unbound_and_s6_init.sh
 ENTRYPOINT ./start_unbound_and_s6_init.sh
 
 # Remove unnecessary programs
-RUN apt-get clean all && \
-    apt-get remove -y \
+RUN apt-get remove -y \
     wget
