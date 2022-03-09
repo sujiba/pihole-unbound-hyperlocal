@@ -19,7 +19,7 @@ jobs:
     - 
       name: Set up variables
       run: |
-        VER=$(cat /docker-build/VERSION)
+        VER=$(cat ./docker-build/VERSION)
         echo "VERSION=$VER" >> $GITHUB_ENV
     -
       name: Set up Docker Buildx
