@@ -17,9 +17,8 @@ COPY unbound-v1.13.1_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
 # Create the chroot directory and generate root.key.
 # Copy / move files and change owner.
 RUN wget -O root.hints https://www.internic.net/domain/named.root && \
-    mkdir /usr/local/etc/unbound && \
-    mv root.hints /usr/local/etc/unbound/ && \
-    chown -R unbound:unbound /usr/local/etc/unbound/root.*
+    mv root.hints /var/lib/unbound/ && \
+    chown -R unbound:unbound /var/lib/unbound/root.hints
 
 # Unbound startup script
 COPY start_unbound_and_s6_init.sh start_unbound_and_s6_init.sh
