@@ -14,10 +14,11 @@ RUN apt-get update && \
 COPY unbound-v1.13.1_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
 
 # Download the DNS-Root-Zone. 
-# Create the chroot directory.
+# Create the chroot directory and generate root.key.
 # Copy / move files and change owner.
 RUN wget -O root.hints https://www.internic.net/domain/named.root && \
     mkdir /usr/local/etc/unbound && \
+    unbound-anchor && \
     cp /var/lib/unbound/root.key /usr/local/etc/unbound/root.key && \
     mv root.hints /usr/local/etc/unbound/ && \
     chown -R unbound:unbound /usr/local/etc/unbound/root.*
