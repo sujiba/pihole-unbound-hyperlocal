@@ -1,6 +1,6 @@
 # Pihole + Unbound + Hyperlocal
 
-**IMPORTANT**: When using this Docker image, please report any bugs or suggestions to us directly.
+**IMPORTANT**: When using this Docker image, please report any bugs or suggestions to this repository directly.
 
 ### Overview
 - [Introduction](https://github.com/sujiba/pihole-unbound-hyperlocal#introduction)
