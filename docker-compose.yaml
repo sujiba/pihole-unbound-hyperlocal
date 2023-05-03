@@ -1,0 +1,35 @@
+version: "3"
+
+services:
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+  pihole-unbound:
+    image: sujiba/pihole-unbound-hyperlocal:latest
+    container_name: pihole-unbound
+    hostname: ${HOSTNAME}
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "67:67/udp"
+      - "${HTTP_PORT}:80/tcp"
+      # - 5335:5335/tcp # For testing purposes, uncomment to enable unbound access on local server
+    environment:
+      TZ: ${TZ}
+      WEBPASSWORD: ${WEBPASSWORD}
+      PIHOLE_DNS_: ${PIHOLE_DNS}
+      DNSSEC: ${DNSSEC}
+      CUSTOM_CACHE_SIZE: ${CUSTOM_CACHE_SIZE}
+      DNS_BOGUS_PRIV: ${DNS_BOGUS_PRIV}
+      DNS_FQDN_REQUIRED: ${DNS_FQDN_REQUIRED}
+      TEMPERATUREUNIT: ${TEMPERATUREUNIT}
+      WEBTHEME: ${WEBTHEME}
+    # Volumes store your data between container upgrades
+    volumes:
+      - ./etc-pihole/:/etc/pihole/
+      - ./etc-dnsmasq.d/:/etc/dnsmasq.d/
+      # You'll need this, if you are using a self-created network
+      #- ./resolv.conf:/etc/resolv.conf
+    # Recommended but not required (DHCP needs NET_ADMIN)
+    # https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+    #cap_add:
+    #  - NET_ADMIN
+    restart: unless-stopped
