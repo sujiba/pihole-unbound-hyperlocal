@@ -1,5 +1,5 @@
 # Get the latest Pi-hole version
-FROM pihole/pihole:2022.04.1
+FROM pihole/pihole:2022.02.1
 
 # Install necessary programs
 RUN apt-get update && \
@@ -10,8 +10,8 @@ RUN apt-get update && \
 
 # Additional configs
 # unbound
-# COPY unbound-v1.9_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
-COPY unbound-v1.13.1_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
+COPY unbound-v1.9_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
+#COPY unbound-v1.13.1_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
 
 # Download the DNS-Root-Zone. 
 # Create the chroot directory and generate root.key.
