@@ -9,7 +9,7 @@ services:
     ports:
       - "53:53/tcp"
       - "53:53/udp"
-      - "67:67/udp"
+      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
       - "${HTTP_PORT}:80/tcp"
       # - 5335:5335/tcp # For testing purposes, uncomment to enable unbound access on local server
     environment:
