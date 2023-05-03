@@ -8,6 +8,7 @@
 - [First startup](https://github.com/sujiba/pihole-unbound-hyperlocal#first-startup)
   - [Testing](https://github.com/sujiba/pihole-unbound-hyperlocal#testing)
   - [Additional configuration](https://github.com/sujiba/pihole-unbound-hyperlocal#additional-configuration)
+- [DNS Problems](https://github.com/sujiba/pihole-unbound-hyperlocal#dns-problems)
 - [Blocklists](https://github.com/sujiba/pihole-unbound-hyperlocal#blocklists)
 - [Acknowledgement](https://github.com/sujiba/pihole-unbound-hyperlocal#acknowledgement)
 
@@ -70,7 +71,7 @@ The following command writes the changes to resolv.conf:
 ```
 sudo resolvconf -u
 ```
-See also the solution on [StackExchange](https://unix.stackexchange.com/questions/647996/docker-container-dns-not-working-with-pihole)
+See also [StackExchange](https://unix.stackexchange.com/questions/647996/docker-container-dns-not-working-with-pihole)
 
 ## Blocklists
 - [Firebog Non-crossed lists](https://v.firebog.net/hosts/lists.php?type=nocross)
