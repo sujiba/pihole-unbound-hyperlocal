@@ -1,5 +1,5 @@
 # Get the latest Pi-hole version
-FROM pihole/pihole:2022.02.1
+FROM pihole/pihole:2022.04.1
 
 # Install necessary programs
 RUN apt-get update && \
@@ -10,12 +10,17 @@ RUN apt-get update && \
 
 # Additional configs
 # unbound
-COPY unbound-v1.9_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
+# COPY unbound-v1.9_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
+COPY unbound-v1.13.1_pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
 
-# Download the DNS-Root-Zone. Change owner and move it to the right directory
+# Download the DNS-Root-Zone. 
+# Create the chroot directory.
+# Copy / move files and change owner.
 RUN wget -O root.hints https://www.internic.net/domain/named.root && \
-    mv root.hints /var/lib/unbound/ && \
-    chown unbound:unbound /var/lib/unbound/root.hints
+    mkdir /usr/local/etc/unbound && \
+    cp /var/lib/unbound/root.key /usr/local/etc/unbound/root.key && \
+    mv root.hints /usr/local/etc/unbound/ && \
+    chown -R unbound:unbound /usr/local/etc/unbound/root.*
 
 # Unbound startup script
 COPY start_unbound_and_s6_init.sh start_unbound_and_s6_init.sh
