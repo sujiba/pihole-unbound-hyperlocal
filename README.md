@@ -59,8 +59,8 @@ and add
 CACHE_SIZE=0
 ```
 
-#### Self-created docker network
-If you are using a self-created docker network, uncomment the following line in the docker-compose.yaml
+#### resolv.conf
+If you are using a self-created docker network or having problems with the pihole deployment inside the container, uncomment the following line in the docker-compose.yaml
 ```
 #- ./resolv.conf:/etc/resolv.conf
 ```
