@@ -59,6 +59,19 @@ If you are having problems with the pihole deployment inside the container, unco
 docker-compose up -d --force-recreate
 ```
 
+## DNS problems
+If you are running other docker containers on the same host and cannot use name resolution within those containers, you have to modify the resolvconf.conf on your host system and uncomment the following:
+```
+# If you run a local name server, you should uncomment the below line and
+# configure your subscribers configuration files below.
+name_servers=127.0.0.1
+```
+The following command writes the changes to resolv.conf:
+```
+sudo resolvconf -u
+```
+See also the solution on [StackExchange](https://unix.stackexchange.com/questions/647996/docker-container-dns-not-working-with-pihole)
+
 ## Blocklists
 - [Firebog Non-crossed lists](https://v.firebog.net/hosts/lists.php?type=nocross)
 - [x0uid SpotifyAdBlock](https://raw.githubusercontent.com/x0uid/SpotifyAdBlock/master/SpotifyBlocklist.txt)
