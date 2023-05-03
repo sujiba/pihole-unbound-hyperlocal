@@ -22,6 +22,8 @@ services:
       DNS_FQDN_REQUIRED: ${DNS_FQDN_REQUIRED}
       TEMPERATUREUNIT: ${TEMPERATUREUNIT}
       WEBTHEME: ${WEBTHEME}
+      FTLCONF_MAXDBDAYS: ${MAXDBDAYS}
+      FTLCONF_DBINTERVAL: ${DBINTERVAL}
     # Volumes store your data between container upgrades
     volumes:
       - ./etc-pihole/:/etc/pihole/
