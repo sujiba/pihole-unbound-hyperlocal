@@ -39,7 +39,7 @@ docker-compose up -d
 
 ### Testing
 ```
-docker exec -it pihole bash
+docker exec -it pihole-unbound bash
 dig github.com @127.0.0.1 +short
 dig sigfail.verteiltesysteme.net @127.0.0.1 | grep status 
 dig sigok.verteiltesysteme.net @127.0.0.1 | grep status 
