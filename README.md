@@ -48,17 +48,6 @@ dig sigok.verteiltesysteme.net @127.0.0.1 | grep status
 - Second dig should show status: SERVFAIL
 - Last dig should show status: NOERROR
 
-### Additional configuration
-Edit setupVars.conf
-```
-vi ./etc-pihole/setupVars.conf
-```
-and add
-```
-# Caching is done by unbound
-CACHE_SIZE=0
-```
-
 #### resolv.conf
 If you are having problems with the pihole deployment inside the container, uncomment the following line in the docker-compose.yaml
 ```
