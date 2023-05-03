@@ -46,18 +46,6 @@ dig sigok.verteiltesysteme.net @127.0.0.1 | grep status
 - Last dig should show status: NOERROR
 
 ### Additional configuration
-Edit the file pihole-FTL.conf
-```
-vi ./etc-pihole/pihole-FTL.conf
-```
-and add the following lines:
-```
-# How many days should Pi-hole store requests - discard older entries
-MAXDBDAYS=30
-
-# Write FTL database from RAM to SD card every x minutes. - To spare the SD card's life
-DBINTERVAL=60
-```
 Edit setupVars.conf
 ```
 vi ./etc-pihole/setupVars.conf
