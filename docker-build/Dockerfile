@@ -29,5 +29,6 @@ RUN apt-get remove -y \
 # Unbound startup script
 RUN mkdir -p /etc/services.d/unbound
 COPY unbound-run /etc/services.d/unbound/run
+RUN chmod ug+x /etc/services.d/unbound/run 
 
 ENTRYPOINT ./s6-init
