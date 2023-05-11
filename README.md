@@ -61,7 +61,7 @@ docker-compose up -d --force-recreate
 ```
 
 ## DNS problems
-If you are running other docker containers on the same host and cannot use name resolution within those containers, you have to modify the resolvconf.conf on your host system and uncomment the following:
+If you are running other docker containers on the same host and cannot use name resolution within those containers, you have to modify /etc/resolvconf.conf on your host system and uncomment the following:
 ```
 # If you run a local name server, you should uncomment the below line and
 # configure your subscribers configuration files below.
