@@ -1,5 +1,5 @@
 # Get the latest Pi-hole version
-FROM pihole/pihole:2023.03.1
+FROM pihole/pihole:2023.05.1
 
 # Install necessary programs
 RUN apt-get update && \
