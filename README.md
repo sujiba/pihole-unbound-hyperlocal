@@ -2,15 +2,18 @@
 
 **IMPORTANT**: When using this Docker image, please report any bugs or suggestions to this repository directly.
 
-### Overview
-- [Introduction](https://github.com/sujiba/pihole-unbound-hyperlocal#introduction)
-- [Prerequisites](https://github.com/sujiba/pihole-unbound-hyperlocal#prerequisites)
-- [First startup](https://github.com/sujiba/pihole-unbound-hyperlocal#first-startup)
-  - [Testing](https://github.com/sujiba/pihole-unbound-hyperlocal#testing)
-  - [Additional configuration](https://github.com/sujiba/pihole-unbound-hyperlocal#additional-configuration)
-- [DNS Problems](https://github.com/sujiba/pihole-unbound-hyperlocal#dns-problems)
-- [Blocklists](https://github.com/sujiba/pihole-unbound-hyperlocal#blocklists)
-- [Acknowledgement](https://github.com/sujiba/pihole-unbound-hyperlocal#acknowledgement)
+## Overview 
+
+- [Pihole + Unbound + Hyperlocal](#pihole--unbound--hyperlocal)
+  - [Overview](#overview)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [First startup](#first-startup)
+    - [resolv.conf](#resolvconf)
+    - [Testing](#testing)
+  - [DNS problems](#dns-problems)
+  - [Blocklists](#blocklists)
+  - [Acknowledgement](#acknowledgement)
 
 ## Introduction
 **Pi-hole**:
@@ -37,37 +40,50 @@ Start the container
 ```
 docker-compose up -d
 ```
+Check the logs
+```
+docker-compose logs -f
+```
+
+### resolv.conf
+If you get the following error
+
+```
+pihole  | Starting unbound
+pihole  |   [✗] DNS resolution is currently unavailable
+```
+
+uncomment the following line in the docker-compose.yaml
+
+```
+#- ./resolv.conf:/etc/resolv.conf
+```
+
+and restart the container
+
+```
+docker-compose up -d --force-recreate
+```
 
 ### Testing
 ```
 docker exec -it pihole-unbound bash
 dig github.com @127.0.0.1 +short
 dig sigfail.verteiltesysteme.net @127.0.0.1 | grep status 
-dig sigok.verteiltesysteme.net @127.0.0.1 | grep status 
+dig sigok.verteiltesysteme.net @127.0.0.1 | grep status
 ```
 - First dig should show an IP address
 - Second dig should show status: SERVFAIL
 - Last dig should show status: NOERROR
 
-#### resolv.conf
-If you are having problems with the pihole deployment inside the container, uncomment the following line in the docker-compose.yaml
-```
-#- ./resolv.conf:/etc/resolv.conf
-```
-
-### Restart the container
-```
-docker-compose up -d --force-recreate
-```
-
 ## DNS problems
-If you are running other docker containers on the same host and cannot use name resolution within those containers, you have to modify /etc/resolvconf.conf on your host system and uncomment the following:
+If you are running other docker containers on the same host and cannot use name resolution within these containers, you have to modify /etc/resolvconf.conf on your host system and uncomment the following:
 ```
 # If you run a local name server, you should uncomment the below line and
 # configure your subscribers configuration files below.
 name_servers=127.0.0.1
 ```
-The following command writes the changes to resolv.conf:
+Write the changes to your resolv.conf:
 ```
 sudo resolvconf -u
 ```
