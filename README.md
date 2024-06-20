@@ -95,6 +95,7 @@ See also [StackExchange](https://unix.stackexchange.com/questions/647996/docker-
 - [Perflyst SmartTV](https://raw.githubusercontent.com/Perflyst/PiHoleBlocklist/master/SmartTV.txt)
 - [mmotti Pi-hole RegEx](https://raw.githubusercontent.com/mmotti/pihole-regex/master/regex.list)
 - [Privacy-Handbuch Windows 10 Telemetry](https://www.privacy-handbuch.de/handbuch_90a2.htm)
+- [hagezi dns-blocklists](https://github.com/hagezi/dns-blocklists)
 
 ## Acknowledgement
 - [Docker Pi-hole](https://github.com/pi-hole/docker-pi-hole)
