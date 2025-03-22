@@ -16,7 +16,7 @@
 > Read https://github.com/pi-hole/docker-pi-hole
 
 > [!tip]
-> Firstly pull the new image with `docker pull sujiba/pihole-unbound-hyperlocal:2025.03.0`.
+> Firstly pull the new image with `docker pull ghcr.io/sujiba/pihole-unbound-hyperlocal:2025.03.0`.
 > Then stop the old container. 
 > Follow the steps described bellow. For the transition you're going to have two folders
 > - old: pihole-unbound-hyperlocal
