@@ -41,6 +41,7 @@ jobs:
           context: ./docker-build
           file: ./docker-build/Dockerfile
           platforms: |
+            linux/arm/v7
             linux/arm64
             linux/amd64
           push: true
