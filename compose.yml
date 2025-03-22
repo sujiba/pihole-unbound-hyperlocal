@@ -1,0 +1,30 @@
+---
+# More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
+  pihole-unbound:
+    # You can also use latest
+    image: sujiba/pihole-unbound-hyperlocal:2025.03.0
+    container_name: pihole-unbound
+    hostname: raspi-01
+    ports:
+      - "53:53/tcp" # DNS Ports
+      - "53:53/udp" # DNS Ports
+      - "80:80/tcp" # Default HTTP Port or an alternative port if you use a reverse proxy like nginx. 
+      - "443:443/tcp" # Default HTTPs Port or an alternative port if you use a reverse proxy like nginx. FTL will generate a self-signed certificate
+      # - "67:67/udp" # Uncomment if you are using Pi-hole as your DHCP server
+      # - "123:123/udp" # Uncomment if you are using Pi-hole as your NTP server
+      # - 5335:5335/tcp # For testing purposes, uncomment to enable unbound access on local server
+    env_file:
+      - ./pihole.env
+    volumes:
+      # For persisting Pi-hole's databases and common configuration file
+      - ./etc-pihole:/etc/pihole
+    # cap_add:
+      # See https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+      # Required if you are using Pi-hole as your DHCP server, else not needed
+      # - NET_ADMIN
+      # Required if you are using Pi-hole as your NTP client to be able to set the host's system time
+      # - SYS_TIME
+      # Optional, if Pi-hole should get some more processing time
+      # - SYS_NICE
+    restart: unless-stopped

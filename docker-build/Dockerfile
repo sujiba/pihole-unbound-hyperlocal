@@ -1,34 +1,26 @@
 # Get the latest Pi-hole version
-FROM pihole/pihole:2024.07.0
+FROM pihole/pihole:2025.03.0
 
-# Install necessary programs
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y \
-    unbound \
+# Install necessary programs without repository caching
+RUN apk upgrade --no-cache && \
+    apk add --no-cache \
+    unbound \ 
     wget
 
 # Additional configs
 # unbound
-COPY unbound-pihole.conf  /etc/unbound/unbound.conf.d/pihole.conf
+COPY unbound-pihole.conf /etc/unbound/unbound.conf.d/pihole.conf
 
 # Set edns packet limit for dnsmasq
 COPY 99-edns.conf /etc/dnsmasq.d/99-edns.conf
 
-# Download DNS-Root-Zone. 
-# Create the chroot directory and generate root.key.
-# Copy / move files and change owner.
-RUN wget -O root.hints https://www.internic.net/domain/named.root && \
-    mv root.hints /var/lib/unbound/ && \
-    chown -R unbound:unbound /var/lib/unbound/root.hints
+# Download DNS-Root-Zone and move file
+RUN wget -S https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
 
-# Remove unnecessary programs
-RUN apt-get remove -y \
-    wget
+# Create unbound log dir
+RUN install -o unbound -g unbound -Dm755 -d /var/log/unbound
 
-# Unbound startup script
-RUN mkdir -p /etc/services.d/unbound
-COPY unbound-run /etc/services.d/unbound/run
-RUN chmod ug+x /etc/services.d/unbound/run 
+# Add unbound start up script
+COPY --chmod=0755 unbound-entrypoint.sh /usr/bin/unbound-entrypoint.sh
 
-ENTRYPOINT ./s6-init
+ENTRYPOINT ["unbound-entrypoint.sh"]
