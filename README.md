@@ -23,7 +23,7 @@
 > - old: pihole-unbound-hyperlocal
 > - new: pihole-unbound-hyperlocal-v6
 > 
-> You can delete the old folder if everything is up and running,
+> You can delete the old folder if everything is up and running.
 
 ## Overview
 
