@@ -2,8 +2,8 @@
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
   pihole-unbound:
-    # You can also use latest | 2025.03.0 | dev | 2025.03.0-dev
-    image: ghcr.io/sujiba/pihole-unbound-hyperlocal:2025.03.0
+    # You can also use latest | yyyy.mm.x | dev | yyyy.mm.x-dev
+    image: ghcr.io/sujiba/pihole-unbound-hyperlocal:latest
     container_name: pihole-unbound
     hostname: raspi-01
     ports:

@@ -16,15 +16,16 @@
 > Read https://github.com/pi-hole/docker-pi-hole
 
 > [!tip]
-> Firstly pull the new image with `docker pull ghcr.io/sujiba/pihole-unbound-hyperlocal:2025.03.0`.
-> Then stop the old container. 
-> Follow the steps described bellow. For the transition you're going to have two folders
+> Firstly pull the new image with `docker pull ghcr.io/sujiba/pihole-unbound-hyperlocal:latest`.
+> Next stop the old container with `docker compose down`. 
+> Follow the steps described under [First startup](#first-startup). 
+> For the upgrade transition you're going to have two folders
 > - old: pihole-unbound-hyperlocal
 > - new: pihole-unbound-hyperlocal-v6
 > 
-> When everything is running, you can delete the old folder.
+> You can delete the old folder if everything is up and running,
 
-## Overview 
+## Overview
 
 - [Pihole + Unbound + Hyperlocal](#pihole--unbound--hyperlocal)
   - [Overview](#overview)
@@ -67,7 +68,7 @@ cp example.pihole.env pihole.env
 vi pihole.env
 
 # Change the ports if you're running a reverse proxy on ports 80 and 443
-vi compose.yml
+vi docker-compose.yml
 ```
 
 Start the container
