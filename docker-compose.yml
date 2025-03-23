@@ -1,37 +1,30 @@
-version: "3"
-
-services:
+---
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
+services:
   pihole-unbound:
-    image: ${IMAGE}
-    container_name: ${NAME}
-    hostname: ${HOSTNAME}
+    # You can also use latest | yyyy.mm.x | dev | yyyy.mm.x-dev
+    image: ghcr.io/sujiba/pihole-unbound-hyperlocal:latest
+    container_name: pihole-unbound
+    hostname: raspi-01
     ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
-      - "${HTTP_PORT}:80/tcp"
+      - "53:53/tcp" # DNS Ports
+      - "53:53/udp" # DNS Ports
+      - "80:80/tcp" # Default HTTP Port or an alternative port if you use a reverse proxy like nginx. 
+      - "443:443/tcp" # Default HTTPs Port or an alternative port if you use a reverse proxy like nginx. FTL will generate a self-signed certificate
+      # - "67:67/udp" # Uncomment if you are using Pi-hole as your DHCP server
+      # - "123:123/udp" # Uncomment if you are using Pi-hole as your NTP server
       # - 5335:5335/tcp # For testing purposes, uncomment to enable unbound access on local server
-    environment:
-      TZ: ${TZ}
-      WEBPASSWORD: ${WEBPASSWORD}
-      PIHOLE_DNS_: ${PIHOLE_DNS}
-      DNSSEC: ${DNSSEC}
-      CUSTOM_CACHE_SIZE: ${CUSTOM_CACHE_SIZE}
-      DNS_BOGUS_PRIV: ${DNS_BOGUS_PRIV}
-      DNS_FQDN_REQUIRED: ${DNS_FQDN_REQUIRED}
-      TEMPERATUREUNIT: ${TEMPERATUREUNIT}
-      WEBTHEME: ${WEBTHEME}
-      FTLCONF_MAXDBDAYS: ${MAXDBDAYS}
-      FTLCONF_DBINTERVAL: ${DBINTERVAL}
-    # Volumes store your data between container upgrades
+    env_file:
+      - ./pihole.env
     volumes:
-      - ./etc-pihole/:/etc/pihole/
-      - ./etc-dnsmasq.d/:/etc/dnsmasq.d/
-      # You'll need this, if you are using a self-created network
-      #- ./resolv.conf:/etc/resolv.conf
-    # Recommended but not required (DHCP needs NET_ADMIN)
-    # https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
-    #cap_add:
-    #  - NET_ADMIN
+      # For persisting Pi-hole's databases and common configuration file
+      - ./etc-pihole:/etc/pihole
+    # cap_add:
+      # See https://github.com/pi-hole/docker-pi-hole#note-on-capabilities
+      # Required if you are using Pi-hole as your DHCP server, else not needed
+      # - NET_ADMIN
+      # Required if you are using Pi-hole as your NTP client to be able to set the host's system time
+      # - SYS_TIME
+      # Optional, if Pi-hole should get some more processing time
+      # - SYS_NICE
     restart: unless-stopped

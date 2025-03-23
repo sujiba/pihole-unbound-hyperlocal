@@ -1,19 +1,48 @@
 # Pihole + Unbound + Hyperlocal
 
-**IMPORTANT**: When using this Docker image, please report any bugs or suggestions to this repository directly.
+> [!NOTE]
+>
+> **IMPORTANT**: When using this Docker image, please report any bugs or suggestions to this repository directly.
 
-## Overview 
+
+## Upgrade Notes
+
+> [!CAUTION]
+> 
+> ## !!! THE LATEST VERSION CONTAINS BREAKING CHANGES
+>
+> **Pi-hole v6 has been entirely redesigned from the ground up and contains many breaking changes.**
+> 
+> Read https://github.com/pi-hole/docker-pi-hole
+
+> [!tip]
+> Firstly pull the new image with `docker pull ghcr.io/sujiba/pihole-unbound-hyperlocal:latest`.
+> Next stop the old container with `docker compose down`. 
+> Follow the steps described under [First startup](#first-startup). 
+> For the upgrade transition you're going to have two folders
+> - old: pihole-unbound-hyperlocal
+> - new: pihole-unbound-hyperlocal-v6
+> 
+> You can delete the old folder if everything is up and running.
+
+## Overview
 
 - [Pihole + Unbound + Hyperlocal](#pihole--unbound--hyperlocal)
   - [Overview](#overview)
+  - [Acknowledgement](#acknowledgement)
   - [Introduction](#introduction)
   - [Prerequisites](#prerequisites)
   - [First startup](#first-startup)
-    - [resolv.conf](#resolvconf)
     - [Testing](#testing)
   - [DNS problems](#dns-problems)
   - [Blocklists](#blocklists)
-  - [Acknowledgement](#acknowledgement)
+
+## Acknowledgement
+- [Docker Pi-hole](https://github.com/pi-hole/docker-pi-hole)
+- [Unbound](https://nlnetlabs.nl/projects/unbound/about/)
+- [Pi-hole Unbound](https://docs.pi-hole.net/guides/dns/unbound/)
+- [mpgirro/docker-pihole-unbound](https://github.com/mpgirro/docker-pihole-unbound)
+- [Pi-hole: Einrichtung und Konfiguration mit unbound – AdBlocker Teil2](https://www.kuketz-blog.de/pi-hole-einrichtung-und-konfiguration-mit-unbound-adblocker-teil2/)
 
 ## Introduction
 **Pi-hole**:
@@ -28,46 +57,33 @@
 ## Prerequisites
 - Install [Docker](https://docs.docker.com/get-docker/)
 - Install [Docker-Compose](https://docs.docker.com/compose/install/)
-- Download the repository to your favored directory
 
 ## First startup
-Copy example.env to .env and change the parameters
+Clone the repository to your favored location and change the config.
 ```
-cp example.env .env
-vi .env
+git clone -b main https://github.com/sujiba/pihole-unbound-hyperlocal.git pihole-unbound-hyperlocal-v6
+
+# Change the timezone, password and other pi-hole settings
+cp example.pihole.env pihole.env
+vi pihole.env
+
+# Change the ports if you're running a reverse proxy on ports 80 and 443
+vi docker-compose.yml
 ```
+
 Start the container
 ```
-docker-compose up -d
+docker compose up -d
 ```
+
 Check the logs
 ```
-docker-compose logs -f
-```
-
-### resolv.conf
-If you get the following error
-
-```
-pihole  | Starting unbound
-pihole  |   [✗] DNS resolution is currently unavailable
-```
-
-uncomment the following line in the docker-compose.yaml
-
-```
-#- ./resolv.conf:/etc/resolv.conf
-```
-
-and restart the container
-
-```
-docker-compose up -d --force-recreate
+docker compose logs -f
 ```
 
 ### Testing
 ```
-docker exec -it pihole-unbound bash
+docker compose exec -it pihole-unbound sh
 dig github.com @127.0.0.1 +short
 dig sigfail.verteiltesysteme.net @127.0.0.1 | grep status 
 dig sigok.verteiltesysteme.net @127.0.0.1 | grep status
@@ -96,10 +112,3 @@ See also [StackExchange](https://unix.stackexchange.com/questions/647996/docker-
 - [mmotti Pi-hole RegEx](https://raw.githubusercontent.com/mmotti/pihole-regex/master/regex.list)
 - [Privacy-Handbuch Windows 10 Telemetry](https://www.privacy-handbuch.de/handbuch_90a2.htm)
 - [hagezi dns-blocklists](https://github.com/hagezi/dns-blocklists)
-
-## Acknowledgement
-- [Docker Pi-hole](https://github.com/pi-hole/docker-pi-hole)
-- [Unbound](https://nlnetlabs.nl/projects/unbound/about/)
-- [Pi-hole Unbound](https://docs.pi-hole.net/guides/dns/unbound/)
-- [Pi-Hole + Unbound - 1 Container](https://github.com/chriscrowe/docker-pihole-unbound/tree/master/one-container)
-- [[Pi-hole][Unbound] Mit dem Pi zur größtmöglichen Unabhängigkeit – DNS](https://forum.kuketz-blog.de/viewtopic.php?f=53&t=8759)
