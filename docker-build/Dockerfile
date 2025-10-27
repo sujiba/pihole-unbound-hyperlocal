@@ -1,5 +1,5 @@
 # Get the latest Pi-hole version
-FROM pihole/pihole:2025.08.0
+FROM pihole/pihole:2025.10.1
 
 # Install necessary programs without repository caching
 RUN apk upgrade --no-cache && \
