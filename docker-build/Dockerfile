@@ -1,5 +1,5 @@
 # Get the latest Pi-hole version
-FROM ghcr.io/pi-hole/pihole:2025.11.1
+FROM ghcr.io/pi-hole/pihole:2026.02.0
 
 # Install necessary programs without repository caching
 RUN apk upgrade --no-cache && \
