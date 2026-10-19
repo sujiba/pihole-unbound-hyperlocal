@@ -4,27 +4,6 @@
 >
 > **IMPORTANT**: When using this Docker image, please report any bugs or suggestions to this repository directly.
 
-
-## Upgrade Notes
-
-> [!CAUTION]
-> 
-> ## !!! THE LATEST VERSION CONTAINS BREAKING CHANGES
->
-> **Pi-hole v6 has been entirely redesigned from the ground up and contains many breaking changes.**
-> 
-> Read https://github.com/pi-hole/docker-pi-hole
-
-> [!tip]
-> Firstly pull the new image with `docker pull ghcr.io/sujiba/pihole-unbound-hyperlocal:latest`.
-> Next stop the old container with `docker compose down`. 
-> Follow the steps described under [First startup](#first-startup). 
-> For the upgrade transition you're going to have two folders
-> - old: pihole-unbound-hyperlocal
-> - new: pihole-unbound-hyperlocal-v6
-> 
-> You can delete the old folder if everything is up and running.
-
 ## Overview
 
 - [Pihole + Unbound + Hyperlocal](#pihole--unbound--hyperlocal)
