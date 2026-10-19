@@ -1,11 +1,11 @@
-name: build prod image
+name: build image
 
 on:
   push:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
-  build-main:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,8 +26,9 @@ jobs:
 
       - name: Set up variables
         run: |
-          VER=$(cat ./docker-build/VERSION)
-          echo "VERSION=$VER" >> $GITHUB_ENV
+          echo "VERSION=$(cat ./docker-build/VERSION)" >> $GITHUB_ENV
+          echo "GIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "REPO_URL=${{ github.server_url }}/${{ github.repository }}" >> $GITHUB_ENV
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -36,18 +37,8 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/bake-action@v6
         with:
-          context: ./docker-build
-          file: ./docker-build/Dockerfile
-          platforms: |
-            linux/amd64
-            linux/arm/v7
-            linux/arm64
-            linux/riscv64
+          source: .
+          targets: ${{ github.ref_name == 'main' && 'image-all' || 'image-dev' }}
           push: true
-          tags: | 
-            ${{ secrets.DOCKER_USER }}/pihole-unbound-hyperlocal:${{ env.VERSION }}
-            ${{ secrets.DOCKER_USER }}/pihole-unbound-hyperlocal:latest
-            ghcr.io/${{ secrets.DOCKER_USER }}/pihole-unbound-hyperlocal:${{ env.VERSION }}
-            ghcr.io/${{ secrets.DOCKER_USER }}/pihole-unbound-hyperlocal:latest
