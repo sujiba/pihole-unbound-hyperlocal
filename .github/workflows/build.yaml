@@ -39,6 +39,7 @@ jobs:
       - name: Build and push
         uses: docker/bake-action@v6
         with:
-          source: .
+          source: ./docker-build
+          files: ./docker-bake.hcl
           targets: ${{ github.ref_name == 'main' && 'image-all' || 'image-dev' }}
           push: true
