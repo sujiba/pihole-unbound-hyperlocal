@@ -1,18 +1,18 @@
-# Get the latest Pi-hole version
-FROM ghcr.io/pi-hole/pihole:2026.09.0
+ARG VERSION
+FROM ghcr.io/pi-hole/pihole:${VERSION}
 
 # Install necessary programs without repository caching
 RUN apk upgrade --no-cache && \
     apk add --no-cache \
-    unbound \ 
+    unbound \
     wget
 
 # Additional configs
 # unbound
-COPY unbound-pihole.conf /etc/unbound/unbound.conf.d/pihole.conf
+COPY resources/unbound-pihole.conf /etc/unbound/unbound.conf.d/pihole.conf
 
 # Set edns packet limit for dnsmasq
-COPY 99-edns.conf /etc/dnsmasq.d/99-edns.conf
+COPY resources/99-edns.conf /etc/dnsmasq.d/99-edns.conf
 
 # Download DNS-Root-Zone and move file
 RUN wget -S https://www.internic.net/domain/named.root -O /etc/unbound/root.hints
@@ -21,6 +21,6 @@ RUN wget -S https://www.internic.net/domain/named.root -O /etc/unbound/root.hint
 RUN install -o unbound -g unbound -Dm755 -d /var/log/unbound
 
 # Add unbound start up script
-COPY --chmod=0755 unbound-entrypoint.sh /usr/bin/unbound-entrypoint.sh
+COPY --chmod=0755 resources/unbound-entrypoint.sh /usr/bin/unbound-entrypoint.sh
 
 ENTRYPOINT ["unbound-entrypoint.sh"]
