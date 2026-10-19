@@ -4,9 +4,11 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Pi-hole base image version in docker-build/VERSION",
-      "managerFilePatterns": ["/^docker-build/VERSION$/"],
-      "matchStrings": ["^(?<currentValue>\\S+)"],
+      "description": "Pi-hole base image version in docker-bake.hcl",
+      "managerFilePatterns": ["/^docker-build/docker-bake\\.hcl$/"],
+      "matchStrings": [
+        "variable \"VERSION\"\\s*\\{\\s*default\\s*=\\s*\"(?<currentValue>[^\"]+)\""
+      ],
       "depNameTemplate": "ghcr.io/pi-hole/pihole",
       "datasourceTemplate": "docker",
       "versioningTemplate": "regex:^(?<major>\\d{4})\\.(?<minor>\\d{2})\\.(?<patch>\\d+)$"
