@@ -5,7 +5,7 @@ variable "GIT_SHA" {}
 variable "REPO_URL" { default = "" }
 
 variable "VERSION" {
-  default = "2026.10.1"
+  default = "2026.11.0"
 }
 
 group "default" {
